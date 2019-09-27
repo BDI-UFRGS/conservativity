@@ -1,0 +1,12 @@
+Conservativity violations found in alignment conference.cmt-conference.rdf
+Violations detected:	1		Direct:	1	Indirect:	0
+Computation time:	0.010325 s
+	of which	0.005849525999999994 s for the detection of direct violations
+			0.004475954000000004 s for the detection of indirect violations
+
+
+Direct violations detected:
+(conference.Conference, conference.Conference_volume)
+
+
+Indirect violations detected:

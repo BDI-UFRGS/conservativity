@@ -1,0 +1,12 @@
+Conservativity violations found in alignment conference.conference-ekaw.rdf
+Violations detected:	1		Direct:	1	Indirect:	0
+Computation time:	0.022735 s
+	of which	0.020159354000000018 s for the detection of direct violations
+			0.0025758129999999824 s for the detection of indirect violations
+
+
+Direct violations detected:
+(conference.Conference_proceedings, conference.Conference_document)
+
+
+Indirect violations detected:

@@ -1,0 +1,12 @@
+Conservativity violations found in alignment conference.cmt-ekaw.rdf
+Violations detected:	1		Direct:	1	Indirect:	0
+Computation time:	0.010389 s
+	of which	0.004058985000000015 s for the detection of direct violations
+			0.0063298600000000205 s for the detection of indirect violations
+
+
+Direct violations detected:
+(ekaw.Paper_Author, ekaw.Conference_Participant)
+
+
+Indirect violations detected:

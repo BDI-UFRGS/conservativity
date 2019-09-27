@@ -1,0 +1,13 @@
+Conservativity violations found in alignment conference.edas-sigkdd.rdf
+Violations detected:	2		Direct:	1	Indirect:	1
+Computation time:	0.017616 s
+	of which	0.008236147000000027 s for the detection of direct violations
+			0.009379831999999977 s for the detection of indirect violations
+
+
+Direct violations detected:
+(edas.Author, edas.Person)
+
+
+Indirect violations detected:
+(edas.Presenter, edas.Person)

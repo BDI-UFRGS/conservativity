@@ -1,0 +1,20 @@
+Conservativity violations found in alignment conference.edas-iasted.rdf
+Violations detected:	9		Direct:	5	Indirect:	4
+Computation time:	0.023998 s
+	of which	0.009117072999999976 s for the detection of direct violations
+			0.014881361000000037 s for the detection of indirect violations
+
+
+Direct violations detected:
+(edas.Author, edas.Attendee)
+(edas.Reviewer, edas.Attendee)
+(edas.SessionChair, edas.Attendee)
+(edas.ConferenceDinner, edas.SocialEvent)
+(iasted.Coctail_reception, iasted.Social_program)
+
+
+Indirect violations detected:
+(edas.Presenter, edas.Attendee)
+(edas.Presenter, edas.Person)
+(edas.Author, edas.Person)
+(edas.Reviewer, edas.Person)
