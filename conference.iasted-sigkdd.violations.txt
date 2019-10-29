@@ -1,8 +1,11 @@
 Conservativity violations found in alignment conference.iasted-sigkdd.rdf
 Violations detected:	7		Direct:	1	Indirect:	6
-Computation time:	0.025821 s
-	of which	0.006138054000000004 s for the detection of direct violations
-			0.019683291999999963 s for the detection of indirect violations
+Original alignment size:	15
+Corrected alignment size:	13
+Correction time:	0.005062 s
+Detection time:	0.280159 s
+	of which	0.00529248800012283 s for the detection of direct violations
+			0.2748662859999058 s for the detection of indirect violations
 
 
 Direct violations detected:
@@ -10,9 +13,9 @@ Direct violations detected:
 
 
 Indirect violations detected:
-(sigkdd.Silver_Supporter, sigkdd.Person)
-(sigkdd.Exhibitor, sigkdd.Person)
-(sigkdd.Best_Student_Paper_Supporter, sigkdd.Person)
-(sigkdd.Bronze_Supporter, sigkdd.Person)
 (sigkdd.Gold_Supporter, sigkdd.Person)
+(sigkdd.Bronze_Supporter, sigkdd.Person)
+(sigkdd.Best_Student_Paper_Supporter, sigkdd.Person)
 (sigkdd.Platinum_Supporter, sigkdd.Person)
+(sigkdd.Exhibitor, sigkdd.Person)
+(sigkdd.Silver_Supporter, sigkdd.Person)

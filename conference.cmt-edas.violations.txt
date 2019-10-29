@@ -1,13 +1,16 @@
 Conservativity violations found in alignment conference.cmt-edas.rdf
 Violations detected:	3		Direct:	2	Indirect:	1
-Computation time:	0.014505 s
-	of which	0.0044230660000000865 s for the detection of direct violations
-			0.010082316999999952 s for the detection of indirect violations
+Original alignment size:	13
+Corrected alignment size:	11
+Correction time:	0.003725 s
+Detection time:	0.085317 s
+	of which	0.0042240469999796915 s for the detection of direct violations
+			0.08109277099993051 s for the detection of indirect violations
 
 
 Direct violations detected:
-(edas.Author, edas.Person)
 (edas.Reviewer, edas.Person)
+(edas.Author, edas.Person)
 
 
 Indirect violations detected:

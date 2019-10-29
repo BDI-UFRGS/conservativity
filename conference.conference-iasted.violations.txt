@@ -1,8 +1,11 @@
 Conservativity violations found in alignment conference.conference-iasted.rdf
 Violations detected:	9		Direct:	2	Indirect:	7
-Computation time:	0.031859 s
-	of which	0.009545973000000041 s for the detection of direct violations
-			0.022312608999999983 s for the detection of indirect violations
+Original alignment size:	14
+Corrected alignment size:	12
+Correction time:	0.003945 s
+Detection time:	0.168540 s
+	of which	0.004909181999892098 s for the detection of direct violations
+			0.16363044200011245 s for the detection of indirect violations
 
 
 Direct violations detected:
@@ -11,10 +14,10 @@ Direct violations detected:
 
 
 Indirect violations detected:
-(conference.Reviewer, conference.Conference_contributor)
 (conference.Reviewer, conference.Conference_participant)
+(conference.Reviewer, conference.Conference_contributor)
 (conference.Contribution_1th-author, conference.Active_conference_participant)
 (conference.Contribution_1th-author, conference.Conference_participant)
-(conference.Regular_author, conference.Conference_participant)
 (conference.Contribution_co-author, conference.Active_conference_participant)
 (conference.Contribution_co-author, conference.Conference_participant)
+(conference.Regular_author, conference.Conference_participant)

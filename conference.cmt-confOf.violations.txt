@@ -1,15 +1,18 @@
 Conservativity violations found in alignment conference.cmt-confOf.rdf
 Violations detected:	7		Direct:	4	Indirect:	3
-Computation time:	0.017947 s
-	of which	0.00961335499999999 s for the detection of direct violations
-			0.008334050000000037 s for the detection of indirect violations
+Original alignment size:	16
+Corrected alignment size:	12
+Correction time:	0.004181 s
+Detection time:	0.168994 s
+	of which	0.006056276000208527 s for the detection of direct violations
+			0.1629372479999347 s for the detection of indirect violations
 
 
 Direct violations detected:
-(confof.Chair_PC, confof.Member_PC)
 (confof.Author, confof.Member)
 (confof.Member_PC, confof.Member)
 (confof.Chair_PC, confof.Member)
+(confof.Chair_PC, confof.Member_PC)
 
 
 Indirect violations detected:
