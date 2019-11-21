@@ -1,23 +1,29 @@
 Conservativity violations found in alignment conference.conference-edas.rdf
-Violations detected:	9		Direct:	4	Indirect:	5
+Violations detected:	15		Direct:	4	Indirect:	11
 Original alignment size:	17
 Corrected alignment size:	13
-Correction time:	0.005159 s
-Detection time:	0.246389 s
-	of which	0.006725355999833482 s for the detection of direct violations
-			0.23966391199996906 s for the detection of indirect violations
+Correction time:	0.001657 s
+Detection time:	0.005202 s
+	of which	0.00237954600000001 s for the detection of direct violations
+			0.0028223909999999797 s for the detection of indirect violations
 
 
 Direct violations detected:
-(conference.Rejected_contribution, conference.Paper)
-(edas.Reviewer, edas.Person)
 (conference.Accepted_contribution, conference.Paper)
 (edas.Author, edas.Person)
+(edas.Reviewer, edas.Person)
+(conference.Rejected_contribution, conference.Paper)
 
 
 Indirect violations detected:
-(conference.Rejected_contribution, conference.Regular_contribution)
-(conference.Accepted_contribution, conference.Regular_contribution)
 (conference.Camera_ready_contribution, conference.Regular_contribution)
 (conference.Camera_ready_contribution, conference.Paper)
+(conference.Accepted_contribution, conference.Regular_contribution)
+(conference.Camera_ready_contribution, owl.Thing)
+(conference.Accepted_contribution, owl.Thing)
 (edas.Presenter, edas.Person)
+(edas.Author, owl.Thing)
+(edas.Presenter, owl.Thing)
+(edas.Reviewer, owl.Thing)
+(conference.Rejected_contribution, conference.Regular_contribution)
+(conference.Rejected_contribution, owl.Thing)

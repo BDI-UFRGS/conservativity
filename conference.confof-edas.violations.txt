@@ -1,0 +1,18 @@
+Conservativity violations found in alignment conference.confof-edas.rdf
+Violations detected:	4		Direct:	1	Indirect:	3
+Original alignment size:	19
+Corrected alignment size:	17
+Correction time:	0.001855 s
+Detection time:	0.004110 s
+	of which	0.0037726340000000524 s for the detection of direct violations
+			0.00033755399999996216 s for the detection of indirect violations
+
+
+Direct violations detected:
+(edas.Author, edas.Person)
+
+
+Indirect violations detected:
+(edas.Presenter, edas.Person)
+(edas.Author, owl.Thing)
+(edas.Presenter, owl.Thing)

@@ -1,11 +1,11 @@
 Conservativity violations found in alignment conference.cmt-conference.rdf
-Violations detected:	1		Direct:	1	Indirect:	0
+Violations detected:	3		Direct:	1	Indirect:	2
 Original alignment size:	15
 Corrected alignment size:	13
-Correction time:	0.005219 s
-Detection time:	0.103513 s
-	of which	0.00521097999990161 s for the detection of direct violations
-			0.0983020870000928 s for the detection of indirect violations
+Correction time:	0.001433 s
+Detection time:	0.003266 s
+	of which	0.0028637069999999376 s for the detection of direct violations
+			0.00040226800000009444 s for the detection of indirect violations
 
 
 Direct violations detected:
@@ -13,3 +13,5 @@ Direct violations detected:
 
 
 Indirect violations detected:
+(conference.Conference_volume, owl.Thing)
+(conference.Conference, owl.Thing)

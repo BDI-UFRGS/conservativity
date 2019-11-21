@@ -1,23 +1,27 @@
 Conservativity violations found in alignment conference.conference-iasted.rdf
-Violations detected:	9		Direct:	2	Indirect:	7
+Violations detected:	13		Direct:	2	Indirect:	11
 Original alignment size:	14
 Corrected alignment size:	12
-Correction time:	0.003945 s
-Detection time:	0.168540 s
-	of which	0.004909181999892098 s for the detection of direct violations
-			0.16363044200011245 s for the detection of indirect violations
+Correction time:	0.001422 s
+Detection time:	0.011706 s
+	of which	0.006126793999999991 s for the detection of direct violations
+			0.005578962999999992 s for the detection of indirect violations
 
 
 Direct violations detected:
-(conference.Reviewer, conference.Active_conference_participant)
 (conference.Regular_author, conference.Active_conference_participant)
+(conference.Reviewer, conference.Active_conference_participant)
 
 
 Indirect violations detected:
-(conference.Reviewer, conference.Conference_participant)
-(conference.Reviewer, conference.Conference_contributor)
 (conference.Contribution_1th-author, conference.Active_conference_participant)
 (conference.Contribution_1th-author, conference.Conference_participant)
+(conference.Regular_author, conference.Conference_participant)
 (conference.Contribution_co-author, conference.Active_conference_participant)
 (conference.Contribution_co-author, conference.Conference_participant)
-(conference.Regular_author, conference.Conference_participant)
+(conference.Contribution_1th-author, owl.Thing)
+(conference.Regular_author, owl.Thing)
+(conference.Contribution_co-author, owl.Thing)
+(conference.Reviewer, conference.Conference_contributor)
+(conference.Reviewer, conference.Conference_participant)
+(conference.Reviewer, owl.Thing)

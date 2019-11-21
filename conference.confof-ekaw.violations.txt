@@ -1,0 +1,21 @@
+Conservativity violations found in alignment conference.confof-ekaw.rdf
+Violations detected:	7		Direct:	5	Indirect:	2
+Original alignment size:	20
+Corrected alignment size:	16
+Correction time:	0.002850 s
+Detection time:	0.059681 s
+	of which	0.0024809399999980997 s for the detection of direct violations
+			0.05720020800004022 s for the detection of indirect violations
+
+
+Direct violations detected:
+(confof.Chair_PC, confof.Member_PC)
+(confof.Chair_PC, confof.Participant)
+(confof.Student, confof.Scholar)
+(ekaw.Student, ekaw.Conference_Participant)
+(confof.Scholar, confof.Student)
+
+
+Indirect violations detected:
+(ekaw.Student, owl.Thing)
+(confof.Scholar, confof.Participant)

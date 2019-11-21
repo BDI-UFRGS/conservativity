@@ -2,10 +2,10 @@ Conservativity violations found in alignment conference.cmt-sigkdd.rdf
 Violations detected:	1		Direct:	1	Indirect:	0
 Original alignment size:	12
 Corrected alignment size:	10
-Correction time:	0.002992 s
-Detection time:	0.042651 s
-	of which	0.003534925999929328 s for the detection of direct violations
-			0.0391158259999429 s for the detection of indirect violations
+Correction time:	0.001198 s
+Detection time:	0.002421 s
+	of which	0.001926847999999981 s for the detection of direct violations
+			0.0004944219999999389 s for the detection of indirect violations
 
 
 Direct violations detected:

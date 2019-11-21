@@ -1,7 +1,11 @@
 import rdflib
 import sys
 import os
+#import time
 from rdflib import *
+#__requires__ = "owlready2==0.13"
+#import pkg_resources
+#import owlready2
 from owlready2 import *
 
 alignOnto1 = rdflib.term.URIRef('http://knowledgeweb.semanticweb.org/heterogeneity/alignmentonto1')
@@ -11,166 +15,137 @@ alignEntity1 = rdflib.term.URIRef('http://knowledgeweb.semanticweb.org/heterogen
 alignEntity2 = rdflib.term.URIRef('http://knowledgeweb.semanticweb.org/heterogeneity/alignmententity2')
 
 def correct(v,o1,o2):
-    a = []
-    removedNodes = []
-    l1 = len(o1.base_iri)
-    l2 = len(o2.base_iri)
-    size = 0
-    for s in v.subjects(RDF.type, alignCell):   # n
-        size += 1
-        e1 = v.value(s,alignEntity1, None)[l1:]
-        e2 = v.value(s,alignEntity2, None)[l2:]
-        violation = False
-        for e in a:     # 1..n
-            if o1[e[0]] in o1[e1].ancestors():  # n
-                if o2[e[1]] not in o2[e2].ancestors():
-                    violation = True
-            else:
-                if o2[e[1]] in o2[e2].ancestors():
-                    violation = True
-            if o1[e1] in o1[e[0]].ancestors():
-                if o2[e2] not in o2[e[1]].ancestors():
-                    violation = True
-            else:
-                if o2[e2] in o2[e[1]].ancestors():
-                    violation = True
-            if violation:
-                removedNodes.append(s)
-                removedNodes.append(e[2])
-                a.remove(e)
-                break
-        if not violation:
-           a.append((e1,e2,s))
-    return (removedNodes, size, len(a))
-
-
-def correct_opt(v,o1,o2):
     aligned1 = {}
-    aligned1["Thing"] = None
-    aligned1["Property"] = None
-    aligned1["InverseFunctionalProperty"] = None
-    aligned1["FunctionalProperty"] = None
-    aligned1["ObjectProperty"] = None
-    aligned1["DataProperty"] = None
-    for c in o1.classes():
-        aligned1[c.name] = None
-    for c in o1.object_properties():
-        aligned1[c.name] = None
-
     aligned2 = {}
-    aligned2["Thing"] = None
-    aligned2["Property"] = None
-    aligned2["InverseFunctionalProperty"] = None
-    aligned2["FunctionalProperty"] = None
-    aligned2["ObjectProperty"] = None
-    aligned2["DataProperty"] = None
-    for c in o2.classes():
-        aligned2[c.name] = None
-    for c in o2.object_properties():
-        aligned2[c.name] = None
 
     tx1 = {}
     tx2 = {}
     l = {}
-    
     l1 = len(o1.base_iri)
     l2 = len(o2.base_iri)
     for s in v.subjects(RDF.type, alignCell):
         e1 = v.value(s,alignEntity1, None)[l1:]
         e2 = v.value(s,alignEntity2, None)[l2:]
-        aligned1[e1] = s
-        aligned2[e2] = s
+        if e1 not in aligned1:
+            aligned1[e1] = []
+        if e2 not in aligned2:
+            aligned2[e2] = []
+        aligned1[e1].append(s)
+        aligned2[e2].append(s)
         tx1[s] = {}
         tx2[s] = {}
-        for i in l:
-            tx1[s][i] = False
-            tx2[s][i] = False
-            tx1[i][s] = False
-            tx2[i][s] = False
         tx1[s][s] = True
         tx2[s][s] = True
         l[s]=(s,e1,e2)
-    
-    t0 = time.process_time()#
+
     droplist = []
     for i in l:
         ln = []
         for y in o1[l[i][1]].ancestors():
-            s = aligned1[y.name]
-            if s != None:
-                tx1[i][s] = True
-                ln.append(y.name)
+            if y.name in aligned1:
+                for s in aligned1[y.name]:
+                    tx1[i][s] = True
+                    ln.append(y.name)
         for y in o2[l[i][2]].ancestors():
-            s = aligned2[y.name]
-            if s != None:
-                tx2[i][s] = True
-                if not tx1[i][s]:
-                    droplist.append(l[i][0])
-                    droplist.append(s)
-                    aligned1[l[i][1]] = None
-                    aligned1[l[s][1]] = None
-                    aligned2[l[i][2]] = None
-                    aligned2[l[s][2]] = None
-                    break
-        if aligned1[l[i][1]] != None:
+            if y.name in aligned2:
+                for s in aligned2[y.name]:
+                    tx2[i][s] = True
+                    if not s in tx1[i]:
+                        if i in aligned1[l[i][1]]:
+                            aligned1[l[i][1]].remove(i)
+                            aligned2[l[i][2]].remove(i)
+                            droplist.append(i)
+                            aligned1[l[s][1]].remove(s)
+                            aligned2[l[s][2]].remove(s)
+                            droplist.append(s)
+                        break
+                else:
+                    continue
+                break
+        else:
             for y in ln:
-                s = aligned1[y]
-                if s != None and not tx2[i][s]:
-                    droplist.append(l[i][0])
-                    droplist.append(s)
-                    aligned1[l[i][1]] = None
-                    aligned1[l[s][1]] = None
-                    aligned2[l[i][2]] = None
-                    aligned2[l[s][2]] = None
-                    break
-    t1 = time.process_time()#
-    print(t1-t0)#
+                for s in aligned1[y]:
+                    if not s in tx2[i]:
+                        if i in aligned1[l[i][1]]:
+                            aligned1[l[i][1]].remove(i)
+                            aligned2[l[i][2]].remove(i)
+                            droplist.append(i)
+                            aligned1[l[s][1]].remove(s)
+                            aligned2[l[s][2]].remove(s)
+                            droplist.append(s)
+                        break
+                else:
+                    continue
+                break
     return droplist
 
-
 def findViolations(v,o1,o2):
-    a = []
-    violations = []
+    aligned1 = {}
+    aligned2 = {}
+
+    tx1 = {}
+    tx2 = {}
+    l = {}
     l1 = len(o1.base_iri)
     l2 = len(o2.base_iri)
     for s in v.subjects(RDF.type, alignCell):
         e1 = v.value(s,alignEntity1, None)[l1:]
         e2 = v.value(s,alignEntity2, None)[l2:]
-        for e in a:
-            if o1[e[0]] in o1[e1].ancestors():
-                if o2[e[1]] not in o2[e2].ancestors():
-                    violations.append((o2[e2],o2[e[1]]))
-            else:
-                if o2[e[1]] in o2[e2].ancestors():
-                    violations.append((o1[e1],o1[e[0]]))
-            if o1[e1] in o1[e[0]].ancestors():
-                if o2[e2] not in o2[e[1]].ancestors():
-                    violations.append((o2[e[1]],o2[e2]))
-            else:
-                if o2[e2] in o2[e[1]].ancestors():
-                    violations.append((o1[e[0]],o1[e1]))
-        a.append((e1,e2))
+        if e1 not in aligned1:
+            aligned1[e1] = []
+        if e2 not in aligned2:
+            aligned2[e2] = []
+        aligned1[e1].append(s)
+        aligned2[e2].append(s)
+        tx1[s] = {}
+        tx2[s] = {}
+        tx1[s][s] = True
+        tx2[s][s] = True
+        l[s]=(s,e1,e2)
+
+    violations = []
+    for i in l:
+        ln = []
+        for y in o1[l[i][1]].ancestors():
+            if y.name in aligned1:
+                for s in aligned1[y.name]:
+                    tx1[i][s] = True
+                    ln.append(y.name)
+        for y in o2[l[i][2]].ancestors():
+            if y.name in aligned2:
+                for s in aligned2[y.name]:
+                    tx2[i][s] = True
+                    if not s in tx1[i]:
+                        viol = (o1[l[i][1]],o1[l[s][1]])
+                        if not viol in violations:
+                            violations.append(viol)
+        else:
+            for y in ln:
+                for s in aligned1[y]:
+                    if not s in tx2[i]:
+                        viol = (o2[l[i][2]],o2[l[s][2]])
+                        if not viol in violations:
+                            violations.append(viol)
     return violations
 
 def findIndirectViolations(violations):
     indViol = []
     for s,t in violations:
         for d in s.descendants():
-            for a in t.ancestors():
-                if a not in d.ancestors():
-                    v = (d,a)
-                    if v not in violations and v not in indViol:
-                        indViol.append(v)
+            for a in t.ancestors()-d.ancestors():
+                v = (d,a)
+                if v not in violations and v not in indViol:
+                    indViol.append(v)
         for a in t.ancestors():
-            for d in s.descendants():
-                if d not in a.descendants():
-                    v = (d,a)
-                    if v not in violations and v not in indViol:
-                        indViol.append(v)
+            for d in s.descendants()-a.descendants():
+                v = (d,a)
+                if v not in violations and v not in indViol:
+                    indViol.append(v)
     return indViol
 
-def evaluateAlignment(fileName):
+def evaluateAlignment(fileName, onlyCorrect = False, onlyDirect = False):
     v = rdflib.Graph().parse(fileName)
+    ogSize = len(list(v.subjects(RDF.type, alignCell)))
 
     onto1 = list(v.triples((None,alignOnto1,None)))[0][2]
     onto2 = list(v.triples((None,alignOnto2,None)))[0][2]
@@ -179,23 +154,17 @@ def evaluateAlignment(fileName):
     o1.load()
     o2.load()
 
-    #debugging
-    t0 = time.process_time()
-    #correct(v,o1,o2)
-    t1 = time.process_time()
-    #print(t1-t0)
-    correct_opt(v,o1,o2)
-    t2 = time.process_time()
-    print(t2-t1)
-    return()
-    #end debugging
 
     t0 = time.process_time()
-    violations = findViolations(v,o1,o2)
+    violations = []
+    if not onlyCorrect:
+        violations = findViolations(v,o1,o2)
     t1 = time.process_time()
-    indirect = findIndirectViolations(violations)
+    indirect = []
+    if not onlyCorrect and not onlyDirect:
+        indirect = findIndirectViolations(violations)
     t2 = time.process_time()
-    (remove, ogSize, resSize) = correct(v,o1,o2)
+    remove = correct(v,o1,o2)
     t3 = time.process_time()
 
     nv = len(violations)
@@ -203,34 +172,53 @@ def evaluateAlignment(fileName):
     tv = t1-t0
     ti = t2-t1
 
-    if nv > 0:
+    resSize = ogSize
+    if nv > 0 or onlyCorrect:
         for n in remove:
             v.remove((n, None, None))
             v.remove((None, None, n))
+            resSize = len(list(v.subjects(RDF.type, alignCell)))
         c = open("corrected/"+fileName,'wb')
         c.write(v.serialize())
         c.close()
         out = open(fileName[:-4]+".violations.txt",'w')
         out.write("Conservativity violations found in alignment %s\n"%(fileName))
-        out.write("Violations detected:\t%d\t\tDirect:\t%d\tIndirect:\t%d\n"%(nv+ni,nv,ni))
+        if not onlyCorrect:
+            if onlyDirect:
+                out.write("Direct violations detected:\t%d\n"%(nv))
+            else:
+                out.write("Violations detected:\t%d\t\tDirect:\t%d\tIndirect:\t%d\n"%(nv+ni,nv,ni))
         out.write("Original alignment size:\t%d\nCorrected alignment size:\t%d\n"%(ogSize, resSize))
         out.write("Correction time:\t%f s\n"%(t3-t2))
-        out.write("Detection time:\t%f s\n"%(t2-t0))
-        out.write("\tof which\t"+str(tv)+" s for the detection of direct violations\n")
-        out.write("\t\t\t"+str(ti)+" s for the detection of indirect violations\n")
-        out.write("\n\nDirect violations detected:\n")
-        for i in violations:
-            out.write(str(i)+'\n')
-        out.write("\n\nIndirect violations detected:\n")
-        for i in indirect:
-            out.write(str(i)+'\n')
-    out.close()
+        if not onlyCorrect:
+            out.write("Detection time:\t%f s\n"%(t2-t0))
+            if not onlyDirect:
+                out.write("\tof which\t"+str(tv)+" s for the detection of direct violations\n")
+                out.write("\t\t\t"+str(ti)+" s for the detection of indirect violations\n")
+            out.write("\n\nDirect violations detected:\n")
+            for i in violations:
+                out.write(str(i)+'\n')
+            if not onlyDirect:
+                out.write("\n\nIndirect violations detected:\n")
+                for i in indirect:
+                    out.write(str(i)+'\n')
+        out.close()
     return (nv,ni,tv,ti,ogSize,resSize,t3-t2)
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
+    onlyCorrect = False
+    onlyDirect = False
+    args = 1
+    if "-d" in sys.argv:
+        onlyDirect = True
+        args += 1
+    elif "-c" in sys.argv:
+        onlyCorrect = True
+        args += 1
+    if len(sys.argv) > args:
         for f in sys.argv[1:]:
-            evaluateAlignment(f)
+            if f != "-c" and f != "-d":
+                evaluateAlignment(f, onlyCorrect, onlyDirect)
     else:
         out = open("violations_summary.txt",'w')
         out.write("Conservativity violations - Summary\n")
@@ -238,7 +226,13 @@ if __name__ == "__main__":
         for root,dirs,files in os.walk('.'):
             for f in files:
                 if f[-4:]==".rdf":
-                    r = evaluateAlignment(f)
-                    out.write("%s\t%d\t%d\t%d(%d)\t%.5f\t%.5f(%.5f)\n"%(f,r[4],r[5],r[0]+r[1],r[1],r[6],r[2],r[3]))
+                    print(f)
+                    r = evaluateAlignment(f, onlyCorrect, onlyDirect)
+                    if onlyCorrect:
+                        out.write("%s\t%d\t%d\t-(-)\t%.5f\t-(-)\n"%(f,r[4],r[5],r[6]))
+                    elif onlyDirect:
+                        out.write("%s\t%d\t%d\t%d(-)\t%.5f\t%.5f(-)\n"%(f,r[4],r[5],r[0],r[6],r[2]))
+                    else:
+                        out.write("%s\t%d\t%d\t%d(%d)\t%.5f\t%.5f(%.5f)\n"%(f,r[4],r[5],r[0],r[1],r[6],r[2],r[3]))
             break
         out.close()

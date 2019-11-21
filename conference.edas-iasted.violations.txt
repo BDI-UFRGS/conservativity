@@ -1,23 +1,29 @@
 Conservativity violations found in alignment conference.edas-iasted.rdf
-Violations detected:	9		Direct:	5	Indirect:	4
+Violations detected:	15		Direct:	5	Indirect:	10
 Original alignment size:	19
 Corrected alignment size:	15
-Correction time:	0.006636 s
-Detection time:	0.252792 s
-	of which	0.009402740000041376 s for the detection of direct violations
-			0.24338923799996337 s for the detection of indirect violations
+Correction time:	0.002163 s
+Detection time:	0.061621 s
+	of which	0.003086409999980333 s for the detection of direct violations
+			0.05853475899999694 s for the detection of indirect violations
 
 
 Direct violations detected:
-(edas.Author, edas.Attendee)
 (edas.Reviewer, edas.Attendee)
-(edas.SessionChair, edas.Attendee)
-(iasted.Coctail_reception, iasted.Social_program)
 (edas.ConferenceDinner, edas.SocialEvent)
+(iasted.Coctail_reception, iasted.Social_program)
+(edas.SessionChair, edas.Attendee)
+(edas.Author, edas.Attendee)
 
 
 Indirect violations detected:
-(edas.Author, edas.Person)
-(edas.Presenter, edas.Attendee)
-(edas.Presenter, edas.Person)
 (edas.Reviewer, edas.Person)
+(edas.Reviewer, owl.Thing)
+(edas.ConferenceDinner, owl.Thing)
+(iasted.Coctail_reception, owl.Thing)
+(edas.SessionChair, owl.Thing)
+(edas.Author, edas.Person)
+(edas.Presenter, edas.Person)
+(edas.Presenter, edas.Attendee)
+(edas.Author, owl.Thing)
+(edas.Presenter, owl.Thing)
