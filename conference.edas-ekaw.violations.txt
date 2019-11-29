@@ -1,22 +1,24 @@
 Conservativity violations found in alignment conference.edas-ekaw.rdf
-Violations detected:	8		Direct:	3	Indirect:	5
+Violations detected:	4		Direct:	3	Indirect:	1
 Original alignment size:	23
-Corrected alignment size:	17
-Correction time:	0.002227 s
-Detection time:	0.005549 s
-	of which	0.0031362010000179907 s for the detection of direct violations
-			0.002412322999987282 s for the detection of indirect violations
+Corrected alignment size:	20
+	Greedy algorithm repair size:	6
+	Improved repair size:		3
+
+Correction time:	0.001825 s
+	of which	0.000980 s for the greedy algorithm stage
+			0.000844 s for the result improvement stage
+
+Detection time:	0.086297 s
+	of which	0.0028119950000018434 s for the detection of direct violations
+			0.08348489100001188 s for the detection of indirect violations
 
 
 Direct violations detected:
 (edas.ConferenceDinner, edas.SocialEvent)
-(edas.SessionChair, edas.Attendee)
 (edas.Author, edas.Person)
+(edas.SessionChair, edas.Attendee)
 
 
 Indirect violations detected:
-(edas.ConferenceDinner, owl.Thing)
-(edas.SessionChair, owl.Thing)
 (edas.Presenter, edas.Person)
-(edas.Author, owl.Thing)
-(edas.Presenter, owl.Thing)

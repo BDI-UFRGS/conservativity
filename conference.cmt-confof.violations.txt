@@ -1,21 +1,27 @@
 Conservativity violations found in alignment conference.cmt-confof.rdf
 Violations detected:	7		Direct:	4	Indirect:	3
 Original alignment size:	16
-Corrected alignment size:	12
-Correction time:	0.001584 s
-Detection time:	0.003914 s
-	of which	0.0020666099999999687 s for the detection of direct violations
-			0.0018469429999999898 s for the detection of indirect violations
+Corrected alignment size:	14
+	Greedy algorithm repair size:	4
+	Improved repair size:		2
+
+Correction time:	0.001204 s
+	of which	0.000670 s for the greedy algorithm stage
+			0.000535 s for the result improvement stage
+
+Detection time:	0.012408 s
+	of which	0.002082232999999989 s for the detection of direct violations
+			0.010326103000000031 s for the detection of indirect violations
 
 
 Direct violations detected:
 (confof.Author, confof.Member)
-(confof.Member_PC, confof.Member)
 (confof.Chair_PC, confof.Member)
 (confof.Chair_PC, confof.Member_PC)
+(confof.Member_PC, confof.Member)
 
 
 Indirect violations detected:
 (confof.Author, confof.Participant)
-(confof.Member_PC, confof.Participant)
 (confof.Chair_PC, confof.Participant)
+(confof.Member_PC, confof.Participant)

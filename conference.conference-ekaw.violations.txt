@@ -1,11 +1,17 @@
 Conservativity violations found in alignment conference.conference-ekaw.rdf
-Violations detected:	2		Direct:	1	Indirect:	1
+Violations detected:	1		Direct:	1	Indirect:	0
 Original alignment size:	25
-Corrected alignment size:	23
-Correction time:	0.002595 s
-Detection time:	0.005006 s
-	of which	0.004543222000000013 s for the detection of direct violations
-			0.00046242600000001577 s for the detection of indirect violations
+Corrected alignment size:	24
+	Greedy algorithm repair size:	2
+	Improved repair size:		1
+
+Correction time:	0.002588 s
+	of which	0.001198 s for the greedy algorithm stage
+			0.001389 s for the result improvement stage
+
+Detection time:	0.010077 s
+	of which	0.006836924000000022 s for the detection of direct violations
+			0.0032400179999999557 s for the detection of indirect violations
 
 
 Direct violations detected:
@@ -13,4 +19,3 @@ Direct violations detected:
 
 
 Indirect violations detected:
-(conference.Conference_proceedings, owl.Thing)

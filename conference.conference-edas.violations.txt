@@ -1,29 +1,29 @@
 Conservativity violations found in alignment conference.conference-edas.rdf
-Violations detected:	15		Direct:	4	Indirect:	11
+Violations detected:	9		Direct:	4	Indirect:	5
 Original alignment size:	17
-Corrected alignment size:	13
-Correction time:	0.001657 s
-Detection time:	0.005202 s
-	of which	0.00237954600000001 s for the detection of direct violations
-			0.0028223909999999797 s for the detection of indirect violations
+Corrected alignment size:	15
+	Greedy algorithm repair size:	4
+	Improved repair size:		2
+
+Correction time:	0.001634 s
+	of which	0.000722 s for the greedy algorithm stage
+			0.000912 s for the result improvement stage
+
+Detection time:	0.013354 s
+	of which	0.0022089749999999464 s for the detection of direct violations
+			0.011144562000000025 s for the detection of indirect violations
 
 
 Direct violations detected:
-(conference.Accepted_contribution, conference.Paper)
-(edas.Author, edas.Person)
 (edas.Reviewer, edas.Person)
+(edas.Author, edas.Person)
+(conference.Accepted_contribution, conference.Paper)
 (conference.Rejected_contribution, conference.Paper)
 
 
 Indirect violations detected:
+(edas.Presenter, edas.Person)
+(conference.Accepted_contribution, conference.Regular_contribution)
 (conference.Camera_ready_contribution, conference.Regular_contribution)
 (conference.Camera_ready_contribution, conference.Paper)
-(conference.Accepted_contribution, conference.Regular_contribution)
-(conference.Camera_ready_contribution, owl.Thing)
-(conference.Accepted_contribution, owl.Thing)
-(edas.Presenter, edas.Person)
-(edas.Author, owl.Thing)
-(edas.Presenter, owl.Thing)
-(edas.Reviewer, owl.Thing)
 (conference.Rejected_contribution, conference.Regular_contribution)
-(conference.Rejected_contribution, owl.Thing)

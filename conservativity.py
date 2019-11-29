@@ -13,8 +13,11 @@ alignOnto2 = rdflib.term.URIRef('http://knowledgeweb.semanticweb.org/heterogenei
 alignCell = rdflib.term.URIRef('http://knowledgeweb.semanticweb.org/heterogeneity/alignmentCell')
 alignEntity1 = rdflib.term.URIRef('http://knowledgeweb.semanticweb.org/heterogeneity/alignmententity1')
 alignEntity2 = rdflib.term.URIRef('http://knowledgeweb.semanticweb.org/heterogeneity/alignmententity2')
+alignMeasure = rdflib.term.URIRef('http://knowledgeweb.semanticweb.org/heterogeneity/alignmentmeasure')
+alignRelation = rdflib.term.URIRef('http://knowledgeweb.semanticweb.org/heterogeneity/alignmentrelation')
 
 def correct(v,o1,o2):
+    t0 = time.process_time()
     aligned1 = {}
     aligned2 = {}
 
@@ -38,6 +41,7 @@ def correct(v,o1,o2):
         tx2[s][s] = True
         l[s]=(s,e1,e2)
 
+    t1 = time.process_time()
     droplist = []
     for i in l:
         ln = []
@@ -49,7 +53,6 @@ def correct(v,o1,o2):
         for y in o2[l[i][2]].ancestors():
             if y.name in aligned2:
                 for s in aligned2[y.name]:
-                    tx2[i][s] = True
                     if not s in tx1[i]:
                         if i in aligned1[l[i][1]]:
                             aligned1[l[i][1]].remove(i)
@@ -59,6 +62,8 @@ def correct(v,o1,o2):
                             aligned2[l[s][2]].remove(s)
                             droplist.append(s)
                         break
+                    else:
+                        tx2[i][s] = True
                 else:
                     continue
                 break
@@ -77,7 +82,70 @@ def correct(v,o1,o2):
                 else:
                     continue
                 break
-    return droplist
+
+    t2 = time.process_time()
+    newdrop = []
+    for i in droplist:
+        ln = []
+        for y in o1[l[i][1]].ancestors():
+            if y.name in aligned1:
+                for s in aligned1[y.name]:
+                    tx1[i][s] = True
+                    ln.append(y.name)
+        ld = []
+        for y in o1[l[i][1]].descendants():
+            if y.name in aligned1:
+                for s in aligned1[y.name]:
+                    tx1[s][i] = True
+                    ld.append(y.name)
+        for y in o2[l[i][2]].ancestors():
+            if y.name in aligned2:
+                for s in aligned2[y.name]:
+                    if not s in tx1[i]:
+                        newdrop.append(i)
+                        break
+                    else:
+                        tx2[i][s] = True
+                else:
+                    continue
+                break
+        else:
+            for y in o2[l[i][2]].descendants():
+                if y.name in aligned2:
+                    for s in aligned2[y.name]:
+                        if not i in tx1[s]:
+                            newdrop.append(i)
+                            break
+                        else:
+                            tx2[s][i] = True
+                    else:
+                        continue
+                    break
+            else:
+                for y in ln:
+                    for s in aligned1[y]:
+                        if not s in tx2[i]:
+                            newdrop.append(i)
+                            break
+                    else:
+                        continue
+                    break
+                else:
+                    for y in ld:
+                        for s in aligned1[y]:
+                            if not i in tx2[s]:
+                                newdrop.append(i)
+                                break
+                        else:
+                            continue
+                        break
+                    else:
+                        aligned1[l[i][1]].append(i)
+                        aligned2[l[i][2]].append(i)
+                        tx1[i][i] = True
+                        tx2[i][i] = True
+    t3 = time.process_time()
+    return (newdrop,(t1-t0,t2-t1,t3-t2, len(droplist),len(newdrop)))
 
 def findViolations(v,o1,o2):
     aligned1 = {}
@@ -143,6 +211,22 @@ def findIndirectViolations(violations):
                     indViol.append(v)
     return indViol
 
+def printAlignment(v,out):
+    out.write('<?xml version="1.0" encoding="utf-8"?>\n')
+    out.write('<rdf:RDF xmlns="http://knowledgeweb.semanticweb.org/heterogeneity/alignment"\n')
+    out.write('\txmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"\n')
+    out.write('\txmlns:xsd="http://www.w3.org/2001/XMLSchema#">\n<Alignment>\n<xml>yes</xml>\n<level>0</level>\n<type>??</type>\n')
+    out.write('<onto1><Ontology rdf:about="'+list(v.triples((None,alignOnto1,None)))[0][2].lower()+'"></Ontology></onto1>\n')
+    out.write('<onto2><Ontology rdf:about="'+list(v.triples((None,alignOnto2,None)))[0][2].lower()+'"></Ontology></onto2>\n')
+    for s in v.subjects(RDF.type, alignCell):
+        out.write('<map>\n\t<Cell>\n')
+        out.write('\t\t<entity1 rdf:resource="'+v.value(s,alignEntity1, None)+'"/>\n')
+        out.write('\t\t<entity2 rdf:resource="'+v.value(s,alignEntity2, None)+'"/>\n')
+        out.write('\t\t<measure rdf:datatype="xsd:float">'+v.value(s,alignMeasure, None)+'</measure>\n')
+        out.write('\t\t<relation>'+v.value(s,alignRelation, None)+'</relation>\n')
+        out.write('\t</Cell>\n</map>\n')
+    out.write('</Alignment>\n</rdf:RDF>\n')
+
 def evaluateAlignment(fileName, onlyCorrect = False, onlyDirect = False):
     v = rdflib.Graph().parse(fileName)
     ogSize = len(list(v.subjects(RDF.type, alignCell)))
@@ -164,8 +248,7 @@ def evaluateAlignment(fileName, onlyCorrect = False, onlyDirect = False):
     if not onlyCorrect and not onlyDirect:
         indirect = findIndirectViolations(violations)
     t2 = time.process_time()
-    remove = correct(v,o1,o2)
-    t3 = time.process_time()
+    (remove,data) = correct(v,o1,o2)
 
     nv = len(violations)
     ni = len(indirect)
@@ -178,9 +261,9 @@ def evaluateAlignment(fileName, onlyCorrect = False, onlyDirect = False):
             v.remove((n, None, None))
             v.remove((None, None, n))
             resSize = len(list(v.subjects(RDF.type, alignCell)))
-        c = open("corrected/"+fileName,'wb')
-        c.write(v.serialize())
-        c.close()
+        o = open("corrected/"+fileName,'w')
+        printAlignment(v,o)
+        o.close()
         out = open(fileName[:-4]+".violations.txt",'w')
         out.write("Conservativity violations found in alignment %s\n"%(fileName))
         if not onlyCorrect:
@@ -189,9 +272,12 @@ def evaluateAlignment(fileName, onlyCorrect = False, onlyDirect = False):
             else:
                 out.write("Violations detected:\t%d\t\tDirect:\t%d\tIndirect:\t%d\n"%(nv+ni,nv,ni))
         out.write("Original alignment size:\t%d\nCorrected alignment size:\t%d\n"%(ogSize, resSize))
-        out.write("Correction time:\t%f s\n"%(t3-t2))
+        out.write("\tGreedy algorithm repair size:\t%d\n\tImproved repair size:\t\t%d\n\n"%(data[3],data[4]))
+        out.write("Correction time:\t%f s\n"%(data[1]+data[2]))
+        out.write("\tof which\t%f s for the greedy algorithm stage\n"%(data[1]))
+        out.write("\t\t\t%f s for the result improvement stage\n"%(data[2]))
         if not onlyCorrect:
-            out.write("Detection time:\t%f s\n"%(t2-t0))
+            out.write("\nDetection time:\t%f s\n"%(t2-t0))
             if not onlyDirect:
                 out.write("\tof which\t"+str(tv)+" s for the detection of direct violations\n")
                 out.write("\t\t\t"+str(ti)+" s for the detection of indirect violations\n")
@@ -203,7 +289,8 @@ def evaluateAlignment(fileName, onlyCorrect = False, onlyDirect = False):
                 for i in indirect:
                     out.write(str(i)+'\n')
         out.close()
-    return (nv,ni,tv,ti,ogSize,resSize,t3-t2)
+
+    return (nv,ni,tv,ti,ogSize,data[1],data[2],data[3],data[4])
 
 if __name__ == "__main__":
     onlyCorrect = False
@@ -222,17 +309,17 @@ if __name__ == "__main__":
     else:
         out = open("violations_summary.txt",'w')
         out.write("Conservativity violations - Summary\n")
-        out.write("Alignment\tOriginal size\tResult size\tViolations\tCorrection time\tDetection time\n")
+        out.write("Alignment\tOriginal size\tGreedy repair size\tImproved repair size\tGreedy repair time\tImprovement time\t\tViolations\tDetection time\n")
         for root,dirs,files in os.walk('.'):
             for f in files:
                 if f[-4:]==".rdf":
                     print(f)
-                    r = evaluateAlignment(f, onlyCorrect, onlyDirect)
+                    (violations, indirectV, detectTime, indirectTime, originalSize, greedyTime, improvTime, greedySize, improvSize) = evaluateAlignment(f, onlyCorrect, onlyDirect)
                     if onlyCorrect:
-                        out.write("%s\t%d\t%d\t-(-)\t%.5f\t-(-)\n"%(f,r[4],r[5],r[6]))
+                        out.write("%s\t%d\t%d\t%d\t%.5f\t%.5f\t-(-)\t-(-)\n"%(f,originalSize,greedySize,improvSize,greedyTime,improvTime))
                     elif onlyDirect:
-                        out.write("%s\t%d\t%d\t%d(-)\t%.5f\t%.5f(-)\n"%(f,r[4],r[5],r[0],r[6],r[2]))
+                        out.write("%s\t%d\t%d\t%d\t%.5f\t%.5f\t%d(-)\t%.5f(-)\n"%(f,originalSize,greedySize,improvSize,greedyTime,improvTime,violations,detectTime))
                     else:
-                        out.write("%s\t%d\t%d\t%d(%d)\t%.5f\t%.5f(%.5f)\n"%(f,r[4],r[5],r[0],r[1],r[6],r[2],r[3]))
+                        out.write("%s\t%d\t%d\t%d\t%.5f\t%.5f\t%d(%d)\t%.5f(%.5f)\n"%(f,originalSize,greedySize,improvSize,greedyTime,improvTime,violations,indirectV,detectTime,indirectTime))
             break
         out.close()
