@@ -16,6 +16,21 @@ alignEntity2 = rdflib.term.URIRef('http://knowledgeweb.semanticweb.org/heterogen
 alignMeasure = rdflib.term.URIRef('http://knowledgeweb.semanticweb.org/heterogeneity/alignmentmeasure')
 alignRelation = rdflib.term.URIRef('http://knowledgeweb.semanticweb.org/heterogeneity/alignmentrelation')
 
+def descendants(e):
+    r = set()
+    r.add(e)
+    toVisit = set()
+    toVisit.add(e)
+    while len(toVisit) > 0:
+        next = set()
+        for c in toVisit:
+            for d in c.subclasses():
+                if d not in r:
+                    r.add(d)
+                    next.add(d)
+        toVisit = next
+    return r
+
 def correct(v,o1,o2):
     t0 = time.process_time()
     aligned1 = {}
@@ -30,16 +45,20 @@ def correct(v,o1,o2):
         e1 = v.value(s,alignEntity1, None)[l1:]
         e2 = v.value(s,alignEntity2, None)[l2:]
         if e1 not in aligned1:
-            aligned1[e1] = []
+            aligned1[e1] = set()
         if e2 not in aligned2:
-            aligned2[e2] = []
-        aligned1[e1].append(s)
-        aligned2[e2].append(s)
+            aligned2[e2] = set()
+        aligned1[e1].add(s)
+        aligned2[e2].add(s)
         tx1[s] = {}
         tx2[s] = {}
         tx1[s][s] = True
         tx2[s][s] = True
-        l[s]=(s,e1,e2)
+        #print(str(e1)+'\t'+str(e2))
+        l[s]=(s,e1,e2)#,len(o1[e1].descendants())+len(o2[e2].descendants()))
+        
+#    ls = list(l.keys())
+#    ls.sort(key=lambda x: l[x][3])
 
     t1 = time.process_time()
     droplist = []
@@ -84,6 +103,7 @@ def correct(v,o1,o2):
                 break
 
     t2 = time.process_time()
+
     newdrop = []
     for i in droplist:
         ln = []
@@ -93,7 +113,7 @@ def correct(v,o1,o2):
                     tx1[i][s] = True
                     ln.append(y.name)
         ld = []
-        for y in o1[l[i][1]].descendants():
+        for y in descendants(o1[l[i][1]]):
             if y.name in aligned1:
                 for s in aligned1[y.name]:
                     tx1[s][i] = True
@@ -110,7 +130,7 @@ def correct(v,o1,o2):
                     continue
                 break
         else:
-            for y in o2[l[i][2]].descendants():
+            for y in descendants(o2[l[i][2]]):
                 if y.name in aligned2:
                     for s in aligned2[y.name]:
                         if not i in tx1[s]:
@@ -140,10 +160,8 @@ def correct(v,o1,o2):
                             continue
                         break
                     else:
-                        aligned1[l[i][1]].append(i)
-                        aligned2[l[i][2]].append(i)
-                        tx1[i][i] = True
-                        tx2[i][i] = True
+                        aligned1[l[i][1]].add(i)
+                        aligned2[l[i][2]].add(i)
     t3 = time.process_time()
     return (newdrop,(t1-t0,t2-t1,t3-t2, len(droplist),len(newdrop)))
 
@@ -160,18 +178,18 @@ def findViolations(v,o1,o2):
         e1 = v.value(s,alignEntity1, None)[l1:]
         e2 = v.value(s,alignEntity2, None)[l2:]
         if e1 not in aligned1:
-            aligned1[e1] = []
+            aligned1[e1] = set()
         if e2 not in aligned2:
-            aligned2[e2] = []
-        aligned1[e1].append(s)
-        aligned2[e2].append(s)
+            aligned2[e2] = set()
+        aligned1[e1].add(s)
+        aligned2[e2].add(s)
         tx1[s] = {}
         tx2[s] = {}
         tx1[s][s] = True
         tx2[s][s] = True
         l[s]=(s,e1,e2)
 
-    violations = []
+    violations = set()
     for i in l:
         ln = []
         for y in o1[l[i][1]].ancestors():
@@ -186,29 +204,29 @@ def findViolations(v,o1,o2):
                     if not s in tx1[i]:
                         viol = (o1[l[i][1]],o1[l[s][1]])
                         if not viol in violations:
-                            violations.append(viol)
+                            violations.add(viol)
         else:
             for y in ln:
                 for s in aligned1[y]:
                     if not s in tx2[i]:
                         viol = (o2[l[i][2]],o2[l[s][2]])
                         if not viol in violations:
-                            violations.append(viol)
+                            violations.add(viol)
     return violations
 
 def findIndirectViolations(violations):
-    indViol = []
+    indViol = set()
     for s,t in violations:
-        for d in s.descendants():
+        for d in descendants(s):
             for a in t.ancestors()-d.ancestors():
                 v = (d,a)
                 if v not in violations and v not in indViol:
-                    indViol.append(v)
+                    indViol.add(v)
         for a in t.ancestors():
-            for d in s.descendants()-a.descendants():
+            for d in descendants(s)-descendants(a):
                 v = (d,a)
                 if v not in violations and v not in indViol:
-                    indViol.append(v)
+                    indViol.add(v)
     return indViol
 
 def printAlignment(v,out):
@@ -232,12 +250,14 @@ def evaluateAlignment(fileName, onlyCorrect = False, onlyDirect = False):
     ogSize = len(list(v.subjects(RDF.type, alignCell)))
 
     onto1 = list(v.triples((None,alignOnto1,None)))[0][2]
-    onto2 = list(v.triples((None,alignOnto2,None)))[0][2]
     o1 = get_ontology(onto1.lower()[7:]+".owl")
-    o2 = get_ontology(onto2.lower()[7:]+".owl")
     o1.load()
-    o2.load()
+    sync_reasoner([o1])
 
+    onto2 = list(v.triples((None,alignOnto2,None)))[0][2]
+    o2 = get_ontology(onto2.lower()[7:]+".owl")
+    o2.load()
+    sync_reasoner([o2])
 
     t0 = time.process_time()
     violations = []
