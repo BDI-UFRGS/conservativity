@@ -104,6 +104,7 @@ def correct(v,o1,o2):
 
     t2 = time.process_time()
 
+    newdrop = droplist
     newdrop = []
     for i in droplist:
         ln = []
@@ -252,12 +253,12 @@ def evaluateAlignment(fileName, onlyCorrect = False, onlyDirect = False):
     onto1 = list(v.triples((None,alignOnto1,None)))[0][2]
     o1 = get_ontology(onto1.lower()[7:]+".owl")
     o1.load()
-    sync_reasoner([o1])
 
     onto2 = list(v.triples((None,alignOnto2,None)))[0][2]
     o2 = get_ontology(onto2.lower()[7:]+".owl")
     o2.load()
-    sync_reasoner([o2])
+
+    sync_reasoner()
 
     t0 = time.process_time()
     violations = []
@@ -309,6 +310,15 @@ def evaluateAlignment(fileName, onlyCorrect = False, onlyDirect = False):
                 for i in indirect:
                     out.write(str(i)+'\n')
         out.close()
+
+    s = open("violations_summary.txt",'a')
+    if onlyCorrect:
+         s.write("%s\t%d\t%d\t%d\t%.5f\t%.5f\t-(-)\t-(-)\n"%(fileName,ogSize,data[3],data[4],data[1],data[2]))
+    elif onlyDirect:
+         s.write("%s\t%d\t%d\t%d\t%.5f\t%.5f\t%d(-)\t%.5f(-)\n"%(fileName,ogSize,data[3],data[4],data[1],data[2],nv,tv))
+    else:
+         s.write("%s\t%d\t%d\t%d\t%.5f\t%.5f\t%d(%d)\t%.5f(%.5f)\n"%(fileName,ogSize,data[3],data[4],data[1],data[2],nv,ni,tv,ti))
+    s.close()
 
     return (nv,ni,tv,ti,ogSize,data[1],data[2],data[3],data[4])
 

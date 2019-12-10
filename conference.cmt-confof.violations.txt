@@ -5,20 +5,20 @@ Corrected alignment size:	14
 	Greedy algorithm repair size:	4
 	Improved repair size:		2
 
-Correction time:	0.001204 s
-	of which	0.000670 s for the greedy algorithm stage
-			0.000535 s for the result improvement stage
+Correction time:	0.000579 s
+	of which	0.000347 s for the greedy algorithm stage
+			0.000232 s for the result improvement stage
 
-Detection time:	0.012408 s
-	of which	0.002082232999999989 s for the detection of direct violations
-			0.010326103000000031 s for the detection of indirect violations
+Detection time:	0.009830 s
+	of which	0.0036616180000000054 s for the detection of direct violations
+			0.006168726000000013 s for the detection of indirect violations
 
 
 Direct violations detected:
-(confof.Author, confof.Member)
-(confof.Chair_PC, confof.Member)
 (confof.Chair_PC, confof.Member_PC)
 (confof.Member_PC, confof.Member)
+(confof.Chair_PC, confof.Member)
+(confof.Author, confof.Member)
 
 
 Indirect violations detected:

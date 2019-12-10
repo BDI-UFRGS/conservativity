@@ -5,25 +5,25 @@ Corrected alignment size:	13
 	Greedy algorithm repair size:	2
 	Improved repair size:		1
 
-Correction time:	0.001346 s
-	of which	0.000610 s for the greedy algorithm stage
-			0.000736 s for the result improvement stage
+Correction time:	0.000472 s
+	of which	0.000343 s for the greedy algorithm stage
+			0.000129 s for the result improvement stage
 
-Detection time:	0.020518 s
-	of which	0.004503246999999988 s for the detection of direct violations
-			0.01601486200000002 s for the detection of indirect violations
+Detection time:	0.016806 s
+	of which	0.003631677 s for the detection of direct violations
+			0.013174382000000012 s for the detection of indirect violations
 
 
 Direct violations detected:
-(conference.Reviewer, conference.Active_conference_participant)
 (conference.Regular_author, conference.Active_conference_participant)
+(conference.Reviewer, conference.Active_conference_participant)
 
 
 Indirect violations detected:
-(conference.Reviewer, conference.Conference_contributor)
-(conference.Reviewer, conference.Conference_participant)
 (conference.Regular_author, conference.Conference_participant)
+(conference.Reviewer, conference.Conference_contributor)
 (conference.Contribution_co-author, conference.Conference_participant)
 (conference.Contribution_co-author, conference.Active_conference_participant)
+(conference.Reviewer, conference.Conference_participant)
 (conference.Contribution_1th-author, conference.Conference_participant)
 (conference.Contribution_1th-author, conference.Active_conference_participant)

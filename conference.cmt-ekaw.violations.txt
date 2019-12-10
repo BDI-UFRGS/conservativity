@@ -5,13 +5,13 @@ Corrected alignment size:	10
 	Greedy algorithm repair size:	2
 	Improved repair size:		1
 
-Correction time:	0.001266 s
-	of which	0.000519 s for the greedy algorithm stage
-			0.000747 s for the result improvement stage
+Correction time:	0.000442 s
+	of which	0.000243 s for the greedy algorithm stage
+			0.000198 s for the result improvement stage
 
-Detection time:	0.016802 s
-	of which	0.003336117999999999 s for the detection of direct violations
-			0.013466016999999997 s for the detection of indirect violations
+Detection time:	0.006637 s
+	of which	0.0021121450000000097 s for the detection of direct violations
+			0.0045245909999999945 s for the detection of indirect violations
 
 
 Direct violations detected:
