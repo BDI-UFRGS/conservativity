@@ -1,2 +1,0 @@
-Conservativity violations - Summary
-Alignment	Original size	Greedy repair size	Improved repair size	Greedy repair time	Improvement time		Violations	Detection time
