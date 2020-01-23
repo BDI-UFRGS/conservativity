@@ -1,0 +1,22 @@
+Conservativity Violation Correction Algorithm
+---
+
+The algorithm was implemented in Python3 using libraries RDFLib and Owlready2 version 0.13
+Both libraries may be installed with pip.
+
+To install pip for Python3 with apt package manager, run:
+sudo apt install python3-pip
+
+To install RDFLib, run:
+python3 -m pip install rdflib
+
+to install Owlready 2 version 0.13, run:
+python3 -m pip install owlready2==0.13
+
+RUNNING THE ALGORITHM
+To run the script, pass the files for the alignment and both ontologies as parameters.
+The alignment file must be in the RDF format, and the ontologies in OWL2.
+Note that the order of the ontologies must be the same as it appears in the alignment file.
+
+The execution command is:
+python3 conservativity.py <alignment file> <ontology 1 file> <ontology 2 file>
