@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns="http://knowledgeweb.semanticweb.org/heterogeneity/alignment"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<Alignment>
+<xml>yes</xml>
+<level>0</level>
+<type>??</type>
+<onto1><Ontology rdf:about="http://edas"></Ontology></onto1>
+<onto2><Ontology rdf:about="http://ekaw"></Ontology></onto2>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Organization"/>
+		<entity2 rdf:resource="http://ekaw#Organisation"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Programme"/>
+		<entity2 rdf:resource="http://ekaw#Programme_Brochure"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Workshop"/>
+		<entity2 rdf:resource="http://ekaw#Workshop"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#hasLocation"/>
+		<entity2 rdf:resource="http://ekaw#heldIn"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#RejectedPaper"/>
+		<entity2 rdf:resource="http://ekaw#Rejected_Paper"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#AcademicEvent"/>
+		<entity2 rdf:resource="http://ekaw#Scientific_Event"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Person"/>
+		<entity2 rdf:resource="http://ekaw#Person"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#AcademiaOrganization"/>
+		<entity2 rdf:resource="http://ekaw#Academic_Institution"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Document"/>
+		<entity2 rdf:resource="http://ekaw#Document"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#isReviewedBy"/>
+		<entity2 rdf:resource="http://ekaw#hasReviewer"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Review"/>
+		<entity2 rdf:resource="http://ekaw#Review"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#AcceptedPaper"/>
+		<entity2 rdf:resource="http://ekaw#Accepted_Paper"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#ConferenceDinner"/>
+		<entity2 rdf:resource="http://ekaw#Conference_Banquet"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#ConferenceEvent"/>
+		<entity2 rdf:resource="http://ekaw#Event"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Author"/>
+		<entity2 rdf:resource="http://ekaw#Paper_Author"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Place"/>
+		<entity2 rdf:resource="http://ekaw#Location"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#isReviewing"/>
+		<entity2 rdf:resource="http://ekaw#reviewerOfPaper"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Paper"/>
+		<entity2 rdf:resource="http://ekaw#Paper"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#SessionChair"/>
+		<entity2 rdf:resource="http://ekaw#Session_Chair"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Topic"/>
+		<entity2 rdf:resource="http://ekaw#Research_Topic"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#isLocationOf"/>
+		<entity2 rdf:resource="http://ekaw#locationOf"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+</Alignment>
+</rdf:RDF>

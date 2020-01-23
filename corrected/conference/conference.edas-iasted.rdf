@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF xmlns="http://knowledgeweb.semanticweb.org/heterogeneity/alignment"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<Alignment>
+<xml>yes</xml>
+<level>0</level>
+<type>??</type>
+<onto1><Ontology rdf:about="http://edas"></Ontology></onto1>
+<onto2><Ontology rdf:about="http://iasted"></Ontology></onto2>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Place"/>
+		<entity2 rdf:resource="http://iasted#Place"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Sponsorship"/>
+		<entity2 rdf:resource="http://iasted#Sponzorship"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#ConferenceEvent"/>
+		<entity2 rdf:resource="http://iasted#Conference_activity"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Review"/>
+		<entity2 rdf:resource="http://iasted#Review"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Reception"/>
+		<entity2 rdf:resource="http://iasted#Coctail_reception"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Reviewer"/>
+		<entity2 rdf:resource="http://iasted#Reviewer"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#SlideSet"/>
+		<entity2 rdf:resource="http://iasted#Transparency"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#ConferenceVenuePlace"/>
+		<entity2 rdf:resource="http://iasted#Conference_building"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#SessionChair"/>
+		<entity2 rdf:resource="http://iasted#Session_chair"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#WelcomeTalk"/>
+		<entity2 rdf:resource="http://iasted#Welcome_address"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#CoffeeBreak"/>
+		<entity2 rdf:resource="http://iasted#Coffee_break"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Document"/>
+		<entity2 rdf:resource="http://iasted#Document"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Country"/>
+		<entity2 rdf:resource="http://iasted#State"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Paper"/>
+		<entity2 rdf:resource="http://iasted#Submission"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#Author"/>
+		<entity2 rdf:resource="http://iasted#Author"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#DiningPlace"/>
+		<entity2 rdf:resource="http://iasted#Conference_restaurant"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+<map>
+	<Cell>
+		<entity1 rdf:resource="http://edas#ConferenceDinner"/>
+		<entity2 rdf:resource="http://iasted#Dinner_banquet"/>
+		<measure rdf:datatype="xsd:float">1.0</measure>
+		<relation>=</relation>
+	</Cell>
+</map>
+</Alignment>
+</rdf:RDF>
